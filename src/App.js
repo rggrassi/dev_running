@@ -1,41 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
+import { Provider } from 'react-redux'; 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import store from './redux';
+import Header from './Header';
+import Home from './screens/Home';
+import Admin from './screens/Admin';
+import Restrito from './screens/Restrito';
+import Login from './screens/Login';
 
 class App extends Component {
-
-async componentDidMount() {
-  const login = await axios.post('http://localhost:3001/users/login', {
-    email: 'tuliofaria@devpleno.com',
-    passwd: 'abc123'
-  });
-
-  const token = login.data.token;
-  const decoded = jwtDecode(token);
-  console.log(decoded);
-
-}
-
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <Route exact path='/' component={Home} />
+            <Route path='/admin' component={Admin} />
+            <Route path='/restrito' component={Restrito} />
+            <Route path='/login' component={Login} />
+            <Header />
+          </div>
+        </Router>  
+      </Provider>
     );
   }
 }

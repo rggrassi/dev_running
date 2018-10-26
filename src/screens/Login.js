@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ActionCreators from '../redux/actionCreators';
 import { Redirect } from 'react-router-dom';
+import { Form, Button } from 'semantic-ui-react';
 
 class Login extends Component {
 
@@ -41,12 +42,18 @@ class Login extends Component {
         const { email, passwd } = this.state.form;
         return (
             <div>
-                <h1>Login {JSON.stringify(this.props)}</h1>
-                <form onSubmit={this.handleSubmit}> 
-                    <input type='text' value={email} onChange={this.handleChange('email')} /> 
-                    <input type='password' value={passwd} onChange={this.handleChange('passwd')} /> 
-                    <button type='submit'>Login</button>
-                </form>  
+                <h1>Entrar</h1>
+                <Form onSubmit={this.handleSubmit}> 
+                    <Form.Field>
+                        <label>E-mail</label>
+                        <input type='text' value={email} onChange={this.handleChange('email')} /> 
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Senha</label>
+                        <input type='password' value={passwd} onChange={this.handleChange('passwd')} /> 
+                    </Form.Field>
+                    <Button type='submit'>Entrar</Button>
+                </Form>  
                 { this.props.auth.error && <p>Erro ao logar</p> }  
             </div>
         )
@@ -64,8 +71,5 @@ const mapDispatchToProps = dispatch => {
         login: (email, passwd) => dispatch(ActionCreators.signinRequest(email, passwd))
     }
 }
-
-//const login = () => ActionCreators.signinRequest
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

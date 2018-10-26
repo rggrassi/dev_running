@@ -1,6 +1,9 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Home from './Home';
+import Runs from './Runs';
+import Header from './Header';
 
 const Restrito = props => { 
 
@@ -11,7 +14,11 @@ const Restrito = props => {
     }
 
     return (
-        <h1>Restrito</h1>
+        <div>
+            <Header />
+            <Route path={`${props.match.path}/`} exact component={Home} />
+            <Route path={`${props.match.path}/runs`} component={Runs} />
+        </div>
     )
 }
 

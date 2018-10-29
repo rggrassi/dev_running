@@ -33,10 +33,28 @@ export function* auth() {
     const token = localStorage.getItem('token');
     if (token) {
         try {
-            const user = jwtDecode(token);
-            yield put(ActionCreators.authSuccess(user))
+            const user = yield axios.get('http://localhost:3001/users/me', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            yield put(ActionCreators.authSuccess(user.data))
         } catch(err) {
             yield put(ActionCreators.authFailure('invalid token'))
         }
     }
+}
+
+export function* updateProfile(action) {
+    const token = localStorage.getItem('token');
+    const user = {
+        unit: action.user.unit,
+        timezone: action.user.timezone,        
+    }
+    yield axios.patch(`http://localhost:3001/users/${action.user.id}`, user, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }    
+    })
+    yield put(ActionCreators.updateProfileSuccess(user))
 }

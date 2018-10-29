@@ -21,7 +21,11 @@ export const {
     createRunFailure: ['error'],
 
     destroyAuthRequest: null,
-    destroyAuthSuccess: null
+    destroyAuthSuccess: null,
+
+    updateProfileRequest: ['user'],
+    updateProfileSuccess: ['user'],
+    updateProfileFailure: ['error'],
 })
 
 export default Creators

@@ -5,6 +5,8 @@ export const INITIAL_STATE = {
     isAuthing: false,
     isAuth: false,
     isSigninging: false,
+    isSaving: false,
+    saved: false,
     user: {},
     error: false,
     errorMessage: ''
@@ -77,6 +79,7 @@ export const updateProfileRequest = (state = INITIAL_STATE, action) => {
     return {
         ...state,
         isSaving: true,
+        saved: false,
         error: false,
         errorMessage: ''
     }
@@ -92,6 +95,7 @@ export const updateProfileSuccess = (state = INITIAL_STATE, action) => {
     return {
         ...state,
         isSaving: false,
+        saved: true,
         user: newUser
     }
 }
@@ -100,8 +104,17 @@ export const updateProfileFailure = (state = INITIAL_STATE, action) => {
     return {
         ...state,
         isSaving: false,
+        saved: false,
         error: true,
         errorMessage: action.error
+    }
+}
+
+export const updateProfileReset = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        isSaving: false,
+        saved: false
     }
 }
 
@@ -118,7 +131,8 @@ export const HANDLERS = {
     
     [Types.UPDATE_PROFILE_REQUEST]: updateProfileRequest,
     [Types.UPDATE_PROFILE_SUCCESS]: updateProfileSuccess,
-    [Types.UPDATE_PROFILE_FAILURE]: updateProfileFailure
+    [Types.UPDATE_PROFILE_FAILURE]: updateProfileFailure,
+    [Types.UPDATE_PROFILE_RESET]: updateProfileReset
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS);

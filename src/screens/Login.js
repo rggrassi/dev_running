@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ActionCreators from '../redux/actionCreators';
 import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
+import Header from '../Header'
 
 class Login extends Component {
 
@@ -42,6 +43,7 @@ class Login extends Component {
         const { email, passwd } = this.state.form;
         return (
             <div>
+                <Header />
                 <h1>Entrar</h1>
                 <Form onSubmit={this.handleSubmit}> 
                     <Form.Field>

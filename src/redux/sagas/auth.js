@@ -57,3 +57,13 @@ export function* updateProfile(action) {
     })
     yield put(ActionCreators.updateProfileSuccess(userToSave))
 }
+
+export function* createProfile(action) {
+    const user = yield axios.post('http://localhost:3001/users', action.user);
+    if (user.data.error) {
+        yield put(ActionCreators.createProfileFailure(user.data.message));
+    } else {
+        yield put(ActionCreators.createProfileSuccess(action.user));
+        yield put(ActionCreators.signinRequest(action.user.email, action.user.passwd));
+    }
+}

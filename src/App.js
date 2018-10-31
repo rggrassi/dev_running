@@ -7,6 +7,7 @@ import Admin from './screens/Admin';
 import Restrito from './screens/Restrito';
 import Login from './screens/Login';
 import { Container } from 'semantic-ui-react';
+import CreateAccount from './screens/CreateAccount';
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
             <Route path='/admin' component={Admin} />
             <Route path='/restrito' component={Restrito} />
             <Route path='/login' component={Login} />
+            <Route path='/create-account' component={CreateAccount} />
           </Container>
         </Router>  
       </Provider>

@@ -4,11 +4,11 @@ const Distance = ({ distance, metric }) => {
     let distanceStr = '';
 
     if (metric === 'metric') {
-        distanceStr = distance + 'm';
+        distanceStr = distance.toFixed(2) + ' Km';
     } else {
         //1km = 0,621371mi
         const distanceMi = distance * 0.621371;
-        distanceStr = distanceMi + 'mi';
+        distanceStr = distanceMi.toFixed(2) + ' mi';
     }
 
     return <span>{distanceStr}</span>    

@@ -5,6 +5,7 @@ import { Table, Button } from 'semantic-ui-react';
 import Distance from '../elements/Distance';
 import Duration from '../elements/Duration';
 import DateStr from '../elements/DateStr';
+import { Link } from 'react-router-dom';
 
 class Runs extends Component { 
 
@@ -13,18 +14,10 @@ class Runs extends Component {
     }
     
     render() {
-
-        const run = {
-            friendly_name: 'test run',
-            duration: 100,
-            distance: 100,
-            created: '2018-10-01 11:45:00'
-        }
-
         return (
             <div>
                 <h1>Corridas</h1>            
-                <Button onClick={() => this.props.createRun(run)} >Create</Button>
+                <Button as={Link} to='/restrito/create-run'>Nova corrida</Button>
                 <Table celled>
                     <Table.Header>
                         <Table.HeaderCell>Nome</Table.HeaderCell>

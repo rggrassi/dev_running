@@ -14,13 +14,11 @@ export function* getRuns() {
 }
 
 export function* createRun(action) {
-
-    console.log(action);
-
     const token = localStorage.getItem('token');
-    yield axios.post('http://localhost:3001/runs', action.run, {
+    const runs = yield axios.post('http://localhost:3001/runs', action.run, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
+    yield put(ActionCreators.createRunSuccess(runs.data))
 }

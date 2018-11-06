@@ -19,6 +19,7 @@ export const {
     createRunRequest: ['run'],
     createRunSuccess: ['run'],
     createRunFailure: ['error'],
+    createRunResetar: null,
 
     destroyAuthRequest: null,
     destroyAuthSuccess: null,

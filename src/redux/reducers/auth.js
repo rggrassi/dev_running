@@ -75,6 +75,14 @@ export const destroyAuthSuccess = (state = INITIAL_STATE, action) => {
     }
 }
 
+export const updateProfileReset = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        isSaving: false,
+        saved: false
+    }
+}
+
 export const updateProfileRequest = (state = INITIAL_STATE, action) => {
     return {
         ...state,
@@ -110,7 +118,8 @@ export const updateProfileFailure = (state = INITIAL_STATE, action) => {
     }
 }
 
-export const updateProfileReset = (state = INITIAL_STATE, action) => {
+
+export const createProfileReset = (state = INITIAL_STATE, action) => {
     return {
         ...state,
         isSaving: false,
@@ -153,15 +162,6 @@ export const createProfileFailure = (state = INITIAL_STATE, action) => {
     }
 }
 
-export const createProfileReset = (state = INITIAL_STATE, action) => {
-    return {
-        ...state,
-        isSaving: false,
-        saved: false
-    }
-}
-
-
 export const HANDLERS = {
     [Types.SIGNIN_REQUEST]: signinRequest,
     [Types.SIGNIN_SUCCESS]: signinSuccess,
@@ -173,15 +173,15 @@ export const HANDLERS = {
 
     [Types.DESTROY_AUTH_SUCCESS]: destroyAuthSuccess,
     
+    [Types.UPDATE_PROFILE_RESET]: updateProfileReset,
     [Types.UPDATE_PROFILE_REQUEST]: updateProfileRequest,
     [Types.UPDATE_PROFILE_SUCCESS]: updateProfileSuccess,
     [Types.UPDATE_PROFILE_FAILURE]: updateProfileFailure,
-    [Types.UPDATE_PROFILE_RESET]: updateProfileReset,
 
+    [Types.CREATE_PROFILE_RESET]: createProfileReset,
     [Types.CREATE_PROFILE_REQUEST]: createProfileRequest,
     [Types.CREATE_PROFILE_SUCCESS]: createProfileSuccess,
-    [Types.CREATE_PROFILE_FAILURE]: createProfileFailure,
-    [Types.CREATE_PROFILE_RESET]: createProfileReset
+    [Types.CREATE_PROFILE_FAILURE]: createProfileFailure
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS);

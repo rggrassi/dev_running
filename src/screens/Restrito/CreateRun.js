@@ -6,6 +6,7 @@ import moment from 'moment';
 import momentTz from 'moment-timezone';
 import InputMoment from 'input-moment';
 import 'input-moment/dist/input-moment.css';
+import { Redirect } from 'react-router-dom';
 
 class CreateRun extends Component {
 
@@ -43,6 +44,11 @@ class CreateRun extends Component {
     render() {
         const { unit } = this.props.auth.user;
         const { saved } = this.props.runs;
+
+        if (saved) {
+            return <Redirect to='/restrito/runs'/>
+        }
+
         return (
             <div>
                 <h1>Nova corrida</h1>

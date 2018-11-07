@@ -16,23 +16,27 @@ export const {
     getRunsSuccess: ['runs'],
     getRunsFailure: null,
 
+    createRunReset: null,
     createRunRequest: ['run'],
     createRunSuccess: ['run'],
     createRunFailure: ['error'],
-    createRunResetar: null,
+
+    removeRunRequest: ['id'],
+    removeRunSuccess: ['id'],
+    removeRunFailure: ['error'],
 
     destroyAuthRequest: null,
     destroyAuthSuccess: null,
 
+    updateProfileReset: null,
     updateProfileRequest: ['user'],
     updateProfileSuccess: ['user'],
     updateProfileFailure: ['error'],
-    updateProfileReset: null,
-
+    
+    createProfileReset: null,
     createProfileRequest: ['user'],
     createProfileSuccess: ['user'],
-    createProfileFailure: ['error'],
-    createProfileReset: null
+    createProfileFailure: ['error']
 })
 
 export default Creators

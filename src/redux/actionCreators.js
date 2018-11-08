@@ -12,7 +12,7 @@ export const {
     authSuccess: ['user'],
     authFailure: null,
 
-    getRunsRequest: null,
+    getRunsRequest: ['admin'],
     getRunsSuccess: ['runs'],
     getRunsFailure: null,
 

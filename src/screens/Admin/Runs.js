@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ActionCreators from '../../redux/actionCreators';
-import { Table, Button, Icon, Segment } from 'semantic-ui-react';
+import { Table, Button, Icon, Segment, Label } from 'semantic-ui-react';
 import Distance from '../elements/Distance';
 import Duration from '../elements/Duration';
 import DateStr from '../elements/DateStr';
@@ -44,7 +44,10 @@ class Runs extends Component {
         const { unit, timezone } = this.props.auth.user
         return (
             <Table.Row key={run.id}>
-                <Table.Cell>{ run.friendly_name }</Table.Cell>
+                <Table.Cell>
+                    {run.friendly_name} <br />
+                    <Label>{run.name}</Label>
+                </Table.Cell>
                 <Table.Cell><Duration duration={run.duration} /></Table.Cell>
                 <Table.Cell><Distance distance={run.distance} metric={unit} /></Table.Cell>
                 <Table.Cell><DateStr date={run.created} timezone={timezone}/></Table.Cell>
@@ -67,7 +70,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        load: () => dispatch(ActionCreators.getRunsRequest(false)),
+        load: () => dispatch(ActionCreators.getRunsRequest(true)),
         remove: id => dispatch(ActionCreators.removeRunRequest(id))
     }
 }

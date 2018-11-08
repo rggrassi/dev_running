@@ -3,9 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from './Header';
 import Runs from './Runs';
+import Users from './Users';
+import EditUser from './EditUser';
 
 const Home = props => <h1>Home admin</h1>
-const Users = props => <h1>Users admin</h1>
 
 const Admin = props => {
 
@@ -22,8 +23,9 @@ const Admin = props => {
     return (
         <div>
             <Header />
-            <Route path={`${props.match.path}/`} exact component={Home} />
-            <Route path={`${props.match.path}/users`} component={Users} />
+            <Route exact path={`${props.match.path}/`} component={Home} />
+            <Route exact path={`${props.match.path}/users/:id/edit`} component={EditUser} />
+            <Route exact path={`${props.match.path}/users`} component={Users} />
             <Route path={`${props.match.path}/runs`} component={Runs} />
         </div>
     )

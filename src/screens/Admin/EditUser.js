@@ -3,49 +3,38 @@ import ActionCreators from '../../redux/actionCreators';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import _ from 'lodash';
 
 class EditUser extends Component {
 
     state = {
         name: '',
         email: '',
-        tipo: ''
+        role: '',
+        id: ''
     }
 
-    async componentDidMount() {
-        await this.props.load(this.props.match.params.id);
-        const user = this.props.users.user;
-
-        console.log(user)
-
-        if (user) {
-            this.setState({
-                name: user.name,
-                email: user.email                
-            })
-        }
+    componentDidMount() {
+        this.props.load(this.props.match.params.id);    
     }
 
-    /*static getDerivedStateFromProps(newProps, prevState) {
+    static getDerivedStateFromProps(newProps, prevState) {
 
-        const user = newProps.users.user;
+        const { user } = newProps.users;
 
-         if (user) {
-            const newUser = {};
-            if (user.name !== prevState.name && !prevState.name) {
-                console.log(prevState.name)
-                newUser.name = user.name
+        if (!_.isEmpty(user)) {
+            if (user.id !==  prevState.id) {
+                const newUser = {};
+                newUser.name = user.name;
+                newUser.email = user.email;
+                newUser.id = user.id;
+                newUser.role = user.role;
+                return newUser;
             }
-            if (user.email !== prevState.email) {
-                newUser.email = user.email
-            }
-            if (user.tipo !== prevState.tipo) {
-                newUser.tipo = user.tipo
-            }
-            return newUser
         }
-        return null;
-    }*/
+
+        return null
+    }
 
     handleChange = fieldname => event => {
         this.setState({
@@ -54,19 +43,19 @@ class EditUser extends Component {
     }
 
     handleSubmit = () => {
-
         this.props.save({
             id: this.props.match.params.id,
             name: this.state.name,
-            email: this.state.email 
-        });
+            email: this.state.email, 
+            role: this.state.role
+        })
     }
 
     render() {
         const { saved } = this.props.users;
 
         if (saved) {
-            return <Redirect to='/restrito/users'/>
+            return <Redirect to='/admin/users'/>
         }
 
         return (
@@ -81,7 +70,14 @@ class EditUser extends Component {
                         </Form.Field>  
                         <Form.Field>
                             <label>E-mail:</label>
-                            <input type="text" value={this.state.email} onChange={this.handleChange('email')}/>
+                            <input type="email" value={this.state.email} onChange={this.handleChange('email')}/>
+                        </Form.Field>  
+                        <Form.Field>
+                            <label>E-mail:</label>
+                            <select value={this.state.role} onChange={this.handleChange('role')}>
+                                <option value="admin">Administrador</option>
+                                <option value="user">Usuário</option>
+                            </select>
                         </Form.Field>  
 
                         <Button type='submit'>Salvar usuário</Button>  

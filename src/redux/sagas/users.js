@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put } from 'redux-saga/effects'; 
+import { put, call } from 'redux-saga/effects'; 
 import ActionCreators from '../actionCreators';
 
 export function* getUsers(action) {
@@ -13,14 +13,8 @@ export function* getUsers(action) {
     yield put(ActionCreators.getUsersSuccess(users.data));
 }
 
-export function* getUser(action) {
-    const token = localStorage.getItem('token');
-    const user = yield axios.get(`http://localhost:3001/users/${action.id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
+export const getUser = ({ api }) => function* (action) {
+    const user = yield call(api.getUser, action.id);
     yield put(ActionCreators.getUserSuccess(user.data));
 }
 
@@ -45,4 +39,5 @@ export function* updateUser(action) {
         }    
     })
     yield put(ActionCreators.updateUserSuccess(userToSave))
+    yield put(ActionCreators.updateUserReset())
 }

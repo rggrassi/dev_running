@@ -6,17 +6,20 @@ export const INITIAL_STATE = {
     data: [],
     saved: false,
     isSaving: false,
-    user: {}
+    user: {},
+    error: false
 }
 
 export const getUsersRequest = (state = INITIAL_STATE, action) => {
+
     return {
         ...state,
-        isLoading: true,
+        isLoading: true        
     }
 }
 
 export const getUsersSuccess = (state = INITIAL_STATE, action) => {
+
     return {
         ...state,
         isLoading: false,
@@ -32,14 +35,17 @@ export const getUsersFailure = (state = INITIAL_STATE, action) => {
 }
 
 export const getUserRequest = (state = INITIAL_STATE, action) => {
+
     return {
         ...state,
         isLoading: true,
-        user: action.user
+        saved: false,
+        isSaving: false
     }
 }
 
 export const getUserSuccess = (state = INITIAL_STATE, action) => {
+
     return {
         ...state,
         isLoading: false,
@@ -79,6 +85,51 @@ export const removeUserFailure = (state = INITIAL_STATE, action) => {
     }
 }
 
+export const updateUserRequest = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        isLoading: true,
+        isSaving: false,
+        saved: false,
+        error: false
+    }
+}
+
+export const updateUserReset = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        isSaving: false,
+        saved: false,
+        error: false,
+        user: {}
+    }
+}
+
+export const updateUserSuccess = (state = INITIAL_STATE, action) => {
+    const newUser = {
+        ...state.user
+    }
+    Object.keys(action.user).forEach(key => {
+        newUser[key] = action.user[key]
+    })
+    return {
+        ...state,
+        isSaving: false,
+        saved: true,
+        user: newUser,
+        error: false
+    }
+}
+
+export const updateUserFailure = (state = INITIAL_STATE, action) => {
+    return {
+        ...state,
+        isSaving: false,
+        saved: false,
+        error: true
+    }
+}
+
 export const HANDLERS = {
     [Types.GET_USERS_REQUEST]: getUsersRequest,
     [Types.GET_USERS_SUCCESS]: getUsersSuccess,
@@ -89,6 +140,10 @@ export const HANDLERS = {
     [Types.REMOVE_USER_REQUEST]: removeUserRequest,
     [Types.REMOVE_USER_SUCCESS]: removeUserSuccess,
     [Types.REMOVE_USER_FAILURE]: removeUserFailure,
+    [Types.UPDATE_USER_REQUEST]: updateUserRequest,
+    [Types.UPDATE_USER_SUCCESS]: updateUserSuccess,
+    [Types.UPDATE_USER_RESET]: updateUserReset,
+
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS);

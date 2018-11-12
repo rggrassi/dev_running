@@ -13,8 +13,7 @@ class Users extends Component {
     render() {
         return (
             <div>
-                <h1>Corridas</h1>            
-                <Button as={Link} to='/restrito/create-run'>Nova corrida</Button>
+                <h1>Usuários</h1>            
                 { this.props.users.isLoading && <p>Carregando...</p> }
                 { !this.props.users.isLoading && this.props.users.data.length === 0 && <Segment color='blue'>Nenhuma usuário cadastrado até o momento</Segment>   }
                 { !this.props.users.isLoading && this.props.users.data.length > 0 &&                

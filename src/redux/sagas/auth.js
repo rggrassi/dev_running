@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { put } from 'redux-saga/effects'; 
+import { put, call } from 'redux-saga/effects'; 
 import ActionCreators from '../actionCreators';
 import jwtDecode from 'jwt-decode';
 
-export function* login(action) {
+export const login = ({ api }) => function* (action) {
     
-    const login = yield axios.post('http://localhost:3001/users/login', {
+    const login = yield call(api.login, {
         email: action.email, 
         passwd: action.passwd
     });
@@ -29,37 +28,25 @@ export function* destroyAuth() {
     yield put(ActionCreators.destroyAuthSuccess());
 }
 
-export function* auth() {
+export const auth = ({ api }) => function* () {
     const token = localStorage.getItem('token');
     if (token) {
         try {
-            const user = yield axios.get('http://localhost:3001/users/me', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            yield put(ActionCreators.authSuccess(user.data))
+            const user = yield call(api.getUser, 'me');
+            yield put(ActionCreators.authSuccess(user.data));
         } catch(err) {
-            yield put(ActionCreators.authFailure('invalid token'))
+            yield put(ActionCreators.authFailure('invalid token'));
         }
     }
 }
 
-export function* updateProfile(action) {
-    const token = localStorage.getItem('token');
-    const userToSave = {
-        ...action.user
-    }
-    yield axios.patch(`http://localhost:3001/users/${action.user.id}`, userToSave, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }    
-    })
-    yield put(ActionCreators.updateProfileSuccess(userToSave))
+export const updateProfile = ({ api }) => function* (action) {
+    yield call(api.updateUser, action.user)
+    yield put(ActionCreators.updateProfileSuccess(action.user))
 }
 
-export function* createProfile(action) {
-    const user = yield axios.post('http://localhost:3001/users', action.user);
+export const createProfile = ({ api }) => function* (action) {
+    const user = yield call(api.createProfile, action.user);
     if (user.data.error) {
         yield put(ActionCreators.createProfileFailure(user.data.message));
     } else {

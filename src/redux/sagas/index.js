@@ -8,21 +8,27 @@ import Api from '../../service/Api';
 
 export default function* rootSaga() {
 
-    const api = new Api('http://localhost:3001')
+    const devURL = 'http://localhost:3001';
+    const prodURL = 'http://api.devrunning.com';
+    const baseURl = process.env.NODE_ENV === 'development' ? devURL : prodURL;
+
+    console.log('base: ', baseURl)
+
+    const api = new Api(baseURl);
 
     yield all([
-        takeLatest(Types.SIGNIN_REQUEST, login),
-        takeLatest(Types.AUTH_REQUEST, auth),
+        takeLatest(Types.SIGNIN_REQUEST, login({ api })),
+        takeLatest(Types.AUTH_REQUEST, auth({ api })),
         takeLatest(Types.DESTROY_AUTH_REQUEST, destroyAuth),
-        takeLatest(Types.GET_RUNS_REQUEST, getRuns),
-        takeLatest(Types.CREATE_RUN_REQUEST, createRun),
-        takeLatest(Types.REMOVE_RUN_REQUEST, removeRun),
-        takeLatest(Types.UPDATE_PROFILE_REQUEST, updateProfile),
-        takeLatest(Types.CREATE_PROFILE_REQUEST, createProfile),
-        takeLatest(Types.GET_USERS_REQUEST, getUsers),
-        takeLatest(Types.REMOVE_USER_REQUEST, removeUser),
+        takeLatest(Types.GET_RUNS_REQUEST, getRuns({ api })),
+        takeLatest(Types.CREATE_RUN_REQUEST, createRun({ api })),
+        takeLatest(Types.REMOVE_RUN_REQUEST, removeRun({ api })),
+        takeLatest(Types.UPDATE_PROFILE_REQUEST, updateProfile({ api })),
+        takeLatest(Types.CREATE_PROFILE_REQUEST, createProfile({ api })),
+        takeLatest(Types.GET_USERS_REQUEST, getUsers({ api })),
+        takeLatest(Types.REMOVE_USER_REQUEST, removeUser({ api })),
         takeLatest(Types.GET_USER_REQUEST, getUser({ api })),
-        takeLatest(Types.UPDATE_USER_REQUEST, updateUser),
+        takeLatest(Types.UPDATE_USER_REQUEST, updateUser({ api })),
         put(ActionCreators.authRequest())
     ])    
 }

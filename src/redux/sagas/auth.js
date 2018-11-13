@@ -46,7 +46,7 @@ export const updateProfile = ({ api }) => function* (action) {
 }
 
 export const createProfile = ({ api }) => function* (action) {
-    const user = yield call(api.createProfile, action.user);
+    const user = yield call(api.createUser, action.user);
     if (user.data.error) {
         yield put(ActionCreators.createProfileFailure(user.data.message));
     } else {

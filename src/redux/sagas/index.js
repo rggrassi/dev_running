@@ -12,8 +12,6 @@ export default function* rootSaga() {
     const prodURL = 'http://api.devrunning.com';
     const baseURl = process.env.NODE_ENV === 'development' ? devURL : prodURL;
 
-    console.log('base: ', baseURl)
-
     const api = new Api(baseURl);
 
     yield all([
